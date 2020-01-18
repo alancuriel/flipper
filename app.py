@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap
 from flask_pymongo import PyMongo
 import json
+import sys
 
 
 
@@ -25,10 +26,15 @@ def index():
     return render_template("index.html",
                            online_users=online_users)
 
-@app.route('/search', methods=['POST', 'GET'])
+@app.route('/search', methods=['POST'])
 def search():
 	if request.method == 'POST':
-		print(request)
+		if request.form['secureSearch'] == "on":
+			...
+		else:
+			...
+		print(request.form['query'])
+		print(request.form)
 	return render_template('search.html')
 
 
