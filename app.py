@@ -1,12 +1,5 @@
-'''
-Todo:
-- clean search query
-
-'''
-
-from flask import Flask, render_template, request
+from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
-
 
 app = Flask(__name__)
 Bootstrap(app)
@@ -16,11 +9,10 @@ def index():
 	# return 'hello_world'
     return render_template('index.html')
 
-@app.route('/search', methods=['GET', 'POST'])
+@app.route('/search')
 def search():
-	if request.method == 'POST':
-		print(request.form)
-	return render_template('search.html')
+	# return 'hello_world'
+    return render_template('search.html')
 
 
 if __name__ == '__main__':
