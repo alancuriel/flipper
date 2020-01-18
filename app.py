@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
@@ -9,10 +9,11 @@ def index():
 	# return 'hello_world'
     return render_template('index.html')
 
-@app.route('/search')
+@app.route('/search', methods=['POST', 'GET'])
 def search():
-	# return 'hello_world'
-    return render_template('search.html')
+	if request.method == 'POST':
+		print(request)
+	return render_template('search.html')
 
 
 if __name__ == '__main__':
