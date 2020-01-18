@@ -1,26 +1,22 @@
 from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap
 from flask_pymongo import PyMongo
-import json
-
+import datetime
 
 
 app = Flask(__name__)
 Bootstrap(app)
 
-
-class JSONEncoder(json.JSONEncoder):
-    ''' extend json-encoder class'''
-    def default(self, o):
-        return json.JSONEncoder.default(self, o)
-
 app.config['MONGO_URI'] = "mongodb+srv://alan:Flipper12345@flipper-l35dy.mongodb.net/test?retryWrites=true&w=majority"
 mongo = PyMongo(app)
-app.json_encoder = JSONEncoder
-
 
 @app.route('/')
 def index():
+    print(mongo.db)
+    searches = mongo.db.searches
+    search_id = searches.insert({'item': "airpods", 'mpn': "MVN2A", 'ebayavg': 34, 'date': datetime.datetime.utcnow()})
+    print(search_id)
+
     online_users = mongo.db.users.find({"online": True})
     return render_template("index.html",
                            online_users=online_users)
