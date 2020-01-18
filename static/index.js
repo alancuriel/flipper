@@ -1,9 +1,53 @@
-const { Scene, PerspectiveCamera,Color, WebGLRenderer, BoxGeometry, MeshBasicMaterial, Mesh, OBJLoader, LoadingManager} = THREE 
+const { Scene, PerspectiveCamera, Geometry, LineBasicMaterial, WireframeGeometry, DirectionalLight, OrbitControls, Color, AmbientLight, WebGLRenderer, BoxGeometry,
+	MeshBasicMaterial, LineSegments, Mesh, OBJLoader, LoadingManager, Fog, BoxBufferGeometry, MeshNormalMaterial} = THREE 
 
 let scene = new Scene();
-let camera = new PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+scene.background = new Color( 0xffffff );
+scene.fog = new Fog(0xffffff, 0.2, 10000)
+let camera = new PerspectiveCamera( 60, window.innerWidth/window.innerHeight, 1, 10000 );
 
-let renderer = new WebGLRenderer({alpha: true});
+let renderer = new WebGLRenderer();
+renderer.setPixelRatio( window.devicePixelRatio );
+
+let controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.25;
+controls.enableZoom = true;
+
+
+
+let geometry = new BoxBufferGeometry( 100, 100, 100 );
+let material = new MeshNormalMaterial();
+
+let cubeMaterials = [ 
+    new THREE.MeshBasicMaterial({color:0x2b2d2f, transparent:true, opacity:1, side: THREE.DoubleSide}),
+    new THREE.MeshBasicMaterial({color:0x898989, transparent:true, opacity:1, side: THREE.DoubleSide}), 
+    new THREE.MeshBasicMaterial({color:0xd3d3d3, transparent:true, opacity:1, side: THREE.DoubleSide}),
+    new THREE.MeshBasicMaterial({color:0x808080, transparent:true, opacity:1, side: THREE.DoubleSide}), 
+    new THREE.MeshBasicMaterial({color:0xaaafaa, transparent:true, opacity:1, side: THREE.DoubleSide}), 
+    new THREE.MeshBasicMaterial({color:0xbfff00, transparent:true, opacity:1, side: THREE.DoubleSide}), 
+]; 
+var cubeMaterial = new THREE.MeshFaceMaterial(cubeMaterials); 
+
+
+group = new THREE.Group();
+
+for ( var i = 0; i < 1000; i ++ ) {
+
+	var mesh = new THREE.Mesh( geometry, cubeMaterial );
+	mesh.position.x = Math.random() * 2000 - 1000;
+	mesh.position.y = Math.random() * 2000 - 1000;
+	mesh.position.z = Math.random() * 2000 - 1000;
+	mesh.rotation.x = Math.random() * 2 * Math.PI;
+	mesh.rotation.y = Math.random() * 2 * Math.PI;
+	mesh.matrixAutoUpdate = false;
+	mesh.updateMatrix();
+	group.add( mesh );
+
+}
+
+scene.add( group );
+
 
 renderer.setSize(window.innerWidth, window.innerHeight); // need to improve
 window.addEventListener('resize', function() {
@@ -13,74 +57,23 @@ window.addEventListener('resize', function() {
 document.body.appendChild( renderer.domElement );
 
 
+camera.position.z -= 1150;
 
-
-
-var loadOBJ = function() {
-  //Manager from ThreeJs to track a loader and its status
-  var manager = new LoadingManager();
-  //Loader for Obj from Three.js
-  var loader = new OBJLoader(manager);
-
-  //Launch loading of the obj file, addBananaInScene is the callback when it's ready 
-  loader.load('/static/models/10014_dolphin_v2_max2011_it2.obj', function(object) {
-    banana = object;
-    //Move the banana in the scene
-    banana.rotation.x = Math.PI / 2;
-    banana.position.y = -200;
-    banana.position.z = 50;
-    //Go through all children of the loaded object and search for a Mesh
-    object.traverse(function(child) {
-      //This allow us to check if the children is an instance of the Mesh constructor
-      if (child instanceof Mesh) {
-        child.material.color = new Color(0X00FF00);
-        //Sometimes there are some vertex normals missing in the .obj files, ThreeJs will compute them
-        child.geometry.computeVertexNormals();
-      }
-    });
-    
-    scene.add(banana);
-    // renderer.render();
-  });
-};
-
-loadOBJ();
-
-
-
-// let geometry = new BoxGeometry( 1, 1, 1 );
-// let material = new MeshBasicMaterial( { color: 0x00ff00 } );
-// let cube = new Mesh( geometry, material );
-// scene.add( cube );
-
-camera.position.z = 5;
-
-
-
-function resizeCanvasToDisplaySize() {
-  const canvas = renderer.domElement;
-  // look up the size the canvas is being displayed
-  const width = canvas.clientWidth;
-  const height = canvas.clientHeight;
-
-  // adjust displayBuffer size to match
-  if (canvas.width !== width || canvas.height !== height) {
-    // you must pass false here or three.js sadly fights the browser
-    renderer.setSize(width, height, false);
-    camera.aspect = width / height;
-    camera.updateProjectionMatrix();
-
-    // update any render target sizes here
-  }
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-
 let animate = function () {
-	// resizeCanvasToDisplaySize();
 	requestAnimationFrame( animate );
+	controls.update();
+	var time = Date.now() * 0.0001;
+	let rx = Math.sin( time * 0.7 ) * 0.5;
+	let ry = Math.cos( time * 0.3 ) * 0.5;
+	let rz = Math.sin( time * 0.2 ) * 0.5;
 
-	// cube.rotation.x += 0.01;
-	// cube.rotation.y += 0.01;
+	group.rotation.x = rx;
+	group.rotation.y = ry;
+	group.rotation.z = rz;
 
 	renderer.render( scene, camera );
 };
