@@ -46,6 +46,10 @@ code {
   /*background-color: grey !important;*/
 }
 
+.card-body {
+  padding: 0px;
+}
+
 
 .scrollbar-deep-purple::-webkit-scrollbar-track {
 -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
@@ -131,4 +135,4 @@ width: 6px; }
 .example-1 {
 position: relative;
 overflow-y: scroll;
-height: 50% !important; }
+height: 100% !important; }
