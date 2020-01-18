@@ -12,6 +12,7 @@
     {{ super() }}
 	<script src="{{url_for('.static', filename='three.min.js')}}"></script>
 	<script src="{{url_for('.static', filename='OBJLoader.js')}}"></script>
+	<script src="{{url_for('.static', filename='OrbitControls.js')}}"></script>
 	<script src="{{url_for('.static', filename='index.js')}}"></script>
 
 
@@ -20,7 +21,7 @@
 
 {% block content %}
 
- <div class="text-center">
+<!--  <div class="text-center">
 	<img src="/static/images/giphy.gif" class="img-thumbnail" alt="...">
-</div>
+</div> -->
 {% endblock %}

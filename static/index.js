@@ -1,9 +1,36 @@
-const { Scene, PerspectiveCamera,Color, WebGLRenderer, BoxGeometry, MeshBasicMaterial, Mesh, OBJLoader, LoadingManager} = THREE 
+const { Scene, PerspectiveCamera, Geometry, LineBasicMaterial, WireframeGeometry, DirectionalLight, OrbitControls, Color, AmbientLight, WebGLRenderer, BoxGeometry,
+	MeshBasicMaterial, LineSegments, Mesh, OBJLoader, LoadingManager} = THREE 
 
 let scene = new Scene();
 let camera = new PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
 
-let renderer = new WebGLRenderer({alpha: true});
+let renderer = new WebGLRenderer();
+
+let controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.25;
+controls.enableZoom = true;
+
+
+
+var keyLight = new DirectionalLight(new Color('hsl(30, 100%, 75%)'), 1.0);
+keyLight.position.set(-100, 0, 100);
+
+var fillLight = new DirectionalLight(new Color('hsl(240, 100%, 75%)'), 1.0);
+fillLight.position.set(100, 0, 100);
+
+var backLight = new DirectionalLight(0x000000, 1);
+backLight.position.set(100, 0, -100).normalize();
+
+scene.add(keyLight);
+scene.add(fillLight);
+scene.add(backLight);
+
+
+
+// var light = new THREE.AmbientLight( 0x000000 ); // soft white light
+// scene.add( light );
+
 
 renderer.setSize(window.innerWidth, window.innerHeight); // need to improve
 window.addEventListener('resize', function() {
@@ -12,39 +39,39 @@ window.addEventListener('resize', function() {
 
 document.body.appendChild( renderer.domElement );
 
+let manager = new LoadingManager();
+let loader = new OBJLoader(manager);
+var dolphinOBJ; // global reference for dolphin
+loader.setPath('static/models/');
+loader.load('10014_dolphin_v2_max2011_it2.obj', function(object){
+
+	// object.traverse( function ( child ) {
+
+	// if ( child.isMesh ) {
+
+	// 	child.geometry = new Geometry().fromBufferGeometry( child.geometry );
+	// 	console.log(geometry.vertices)
+
+	// 	// var wireframeGeomtry = new WireframeGeometry( child.geometry );
+	// 	// var wireframeMaterial = new LineBasicMaterial( { color: 0xffffff } );
+	// 	// var wireframe = new LineSegments( wireframeGeomtry, wireframeMaterial );
+	// 	// child.add(wireframe);
+
+	// 	}
+	// });
+
+	object.position.y -= 10;
+	object.rotation.x += 20;
+	object.rotation.y += 10;
+	object.rotateZ( Math.PI  );
+	// console.log(object.attributes.position)
+	dolphinOBJ = object;
+	scene.add(object); 
 
 
 
+});
 
-var loadOBJ = function() {
-  //Manager from ThreeJs to track a loader and its status
-  var manager = new LoadingManager();
-  //Loader for Obj from Three.js
-  var loader = new OBJLoader(manager);
-
-  //Launch loading of the obj file, addBananaInScene is the callback when it's ready 
-  loader.load('/static/models/10014_dolphin_v2_max2011_it2.obj', function(object) {
-    banana = object;
-    //Move the banana in the scene
-    banana.rotation.x = Math.PI / 2;
-    banana.position.y = -200;
-    banana.position.z = 50;
-    //Go through all children of the loaded object and search for a Mesh
-    object.traverse(function(child) {
-      //This allow us to check if the children is an instance of the Mesh constructor
-      if (child instanceof Mesh) {
-        child.material.color = new Color(0X00FF00);
-        //Sometimes there are some vertex normals missing in the .obj files, ThreeJs will compute them
-        child.geometry.computeVertexNormals();
-      }
-    });
-    
-    scene.add(banana);
-    // renderer.render();
-  });
-};
-
-loadOBJ();
 
 
 
@@ -52,35 +79,21 @@ loadOBJ();
 // let material = new MeshBasicMaterial( { color: 0x00ff00 } );
 // let cube = new Mesh( geometry, material );
 // scene.add( cube );
+camera.position.z -= 250;
+// console.log(dolphinOBJ.attributes.position)
+// camera.position.z = 5;
 
-camera.position.z = 5;
-
-
-
-function resizeCanvasToDisplaySize() {
-  const canvas = renderer.domElement;
-  // look up the size the canvas is being displayed
-  const width = canvas.clientWidth;
-  const height = canvas.clientHeight;
-
-  // adjust displayBuffer size to match
-  if (canvas.width !== width || canvas.height !== height) {
-    // you must pass false here or three.js sadly fights the browser
-    renderer.setSize(width, height, false);
-    camera.aspect = width / height;
-    camera.updateProjectionMatrix();
-
-    // update any render target sizes here
-  }
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-
 let animate = function () {
-	// resizeCanvasToDisplaySize();
 	requestAnimationFrame( animate );
+	controls.update();
+	// dolphinOBJ.attributes.position.needsUpdate = true; 
 
-	// cube.rotation.x += 0.01;
-	// cube.rotation.y += 0.01;
+	dolphinOBJ.rotation.z += 0.01;
+	// dolphinOBJ.rotation.z += 0.01;
 
 	renderer.render( scene, camera );
 };
