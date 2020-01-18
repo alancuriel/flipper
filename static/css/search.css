@@ -37,8 +37,14 @@ code {
   font-size: 80%;
 }
 
+#product {
+  /*background-color: black;*/
+  border-color: red;
+}
 
-
+.list-group-item {
+  background-color: grey !important;
+}
 
 
 .scrollbar-deep-purple::-webkit-scrollbar-track {
@@ -125,4 +131,4 @@ width: 6px; }
 .example-1 {
 position: relative;
 overflow-y: scroll;
-height: 200px; }
+height: 50% !important; }
