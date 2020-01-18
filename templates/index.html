@@ -1,13 +1,14 @@
 
-<!DOCTYPE html>
-<html>
-<head>
-<title>Page Title</title>
-</head>
-<body>
-<a>Jose is our friend </a>
-<h1>This is a Heading</h1>
-<p>This is a paragraph.</p>
+{% extends "bootstrap/base.html" %}
 
-</body>
-</html>
+{% block navbar %}
+<div class="navbar navbar-fixed-top">
+  <!-- ... -->
+</div>
+{% endblock %}
+
+{% block content %}
+ <div class="text-center">
+	<img src="/static/images/giphy.gif" class="rounded" alt="...">
+</div>
+{% endblock %}
