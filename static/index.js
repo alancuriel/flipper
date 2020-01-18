@@ -2,7 +2,7 @@ const { Scene, PerspectiveCamera, Geometry, LineBasicMaterial, WireframeGeometry
 	MeshBasicMaterial, LineSegments, Mesh, OBJLoader, LoadingManager, Fog, BoxBufferGeometry, MeshNormalMaterial} = THREE 
 
 let scene = new Scene();
-scene.background = new Color( 0xffffff );
+scene.background = new Color( 0x26252a );
 scene.fog = new Fog(0xffffff, 0.2, 10000)
 let camera = new PerspectiveCamera( 60, window.innerWidth/window.innerHeight, 1, 10000 );
 
@@ -32,7 +32,7 @@ var cubeMaterial = new THREE.MeshFaceMaterial(cubeMaterials);
 
 group = new THREE.Group();
 
-for ( var i = 0; i < 1000; i ++ ) {
+for ( var i = 0; i < 300; i ++ ) {
 
 	var mesh = new THREE.Mesh( geometry, cubeMaterial );
 	mesh.position.x = Math.random() * 2000 - 1000;
@@ -57,7 +57,7 @@ window.addEventListener('resize', function() {
 document.body.appendChild( renderer.domElement );
 
 
-camera.position.z -= 1150;
+camera.position.z -= 500;
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
