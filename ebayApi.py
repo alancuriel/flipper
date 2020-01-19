@@ -32,6 +32,7 @@ class ebayAPI(object):
 
     def get_total_pages(self, _zip ='01609'):
         api_response = requests.get(self.get_sold_url(_zip))
+        print(api_response.status_code)
         result_dict = api_response.json()['findCompletedItemsResponse'][0]
         totalPages = int(result_dict['paginationOutput'][0]['totalPages'][0])
         img = result_dict['searchResult'][0]['item'][0]['galleryURL'][0]
