@@ -1,6 +1,9 @@
 # Flipper
 Python web application that finds products to buy from [mercari](mercari.com) and sell on [ebay](ebay.com)
 
+# How to run
+To run locally you need to run the command "python app.py" inside the flipper directory. Once the server is running, open in your browser "http://localhost:5000/"
+
 # Inspiration
 The idea came from videos on social media platform TikTok. There were several people giving advice to flip products from across different websites. We thought about how we could streamline the process and came up with flipper.
 
