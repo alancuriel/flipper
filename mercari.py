@@ -4,6 +4,7 @@ import json
 import  urllib.parse
 from typing import  List,Dict
 
+# minPrice is 30% of avg price of ebay and maxPrice is avg price in ebay
 def get_items(keyword: str ,minPrice: int ,maxPrice: int) -> List[Dict]:
     soup = get_soup(get_item_url(keyword,minPrice,maxPrice))
     return [json.loads(item.text) for item in soup.find_all('script',{'type':'application/ld+json'})]

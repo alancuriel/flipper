@@ -85,54 +85,24 @@
 		      <div class="card-body">
 	      		<div id="list-example" class="list-group">
 
-				  <a class="list-group-item list-group-item-action" href="#list-item-1">
-				  	<div class="row">
-					  	<div class="col-4">
-					  		<img src="../static/images/giphy.gif" class="img-fluid" alt="Responsive image">
-					  	</div>
-					  	<div class="col-8">
-					  		<h6><strong>Airpods</strong>
-			        		</h6>
-			        		<p>Ad leggings keytar, brunch id art party dolor labore. Pitchfork yr enim lo-fi before they sold out.</p>
-				  		</div>
-	      			</div>
-				  </a>
-				  <a class="list-group-item list-group-item-action" href="#list-item-1">
-				  	<div class="row">
-					  	<div class="col-4">
-					  		<img src="../static/images/giphy.gif" class="img-fluid" alt="Responsive image">
-					  	</div>
-					  	<div class="col-8">
-					  		<h6><strong>Airpods</strong>
-			        		</h6>
-			        		<p>Ad leggings keytar, brunch id art party dolor labore. Pitchfork yr enim lo-fi before they sold out.</p>
-				  		</div>
-	      			</div>
-				  </a>
-				  <a class="list-group-item list-group-item-action" href="#list-item-1">
-				  	<div class="row">
-					  	<div class="col-4">
-					  		<img src="../static/images/giphy.gif" class="img-fluid" alt="Responsive image">
-					  	</div>
-					  	<div class="col-8">
-					  		<h6><strong>Airpods</strong>
-			        		</h6>
-			        		<p>Ad leggings keytar, brunch id art party dolor labore. Pitchfork yr enim lo-fi before they sold out.</p>
-				  		</div>
-	      			</div>
-				  </a>
-				  <a class="list-group-item list-group-item-action" href="#list-item-1">
-				  	<div class="row">
-					  	<div class="col-4">
-					  		<img src="../static/images/giphy.gif" class="img-fluid" alt="Responsive image">
-					  	</div>
-					  	<div class="col-8">
-					  		<h6><strong>Airpods</strong>
-			        		</h6>
-			        		<p>Ad leggings keytar, brunch id art party dolor labore. Pitchfork yr enim lo-fi before they sold out.</p>
-				  		</div>
-	      			</div>
-				  </a>
+	      			{% for i in range(0,lenMercari)%}
+		      			<a class="list-group-item list-group-item-action" href="#list-item-1">
+						  	<div class="row">
+							  	<div class="col-4">
+							  		<img src={{mercariImages[i]}} alt="Responsive image">
+							  	</div>
+							  	<div class="col-8">
+							  		<h5><strong>{{mercariNames[i]}}</strong>
+					        		</h5>
+					        		<p>{{mercariDescrip[i]}}</p>
+						  		</div>
+			      			</div>
+			      		</a>
+	      			{%endfor%}
+
+
+				  
+
 
 				  
 				</div>
