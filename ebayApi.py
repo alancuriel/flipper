@@ -1,6 +1,7 @@
 import json
 import requests
 import urllib.parse
+from urllib.parse import quote_plus
 import threading 
 from multiprocessing import Pool, Manager
 import numpy as np 
@@ -18,20 +19,25 @@ class ebayAPI(object):
 
     def get_sold_url(self, _zip, page=1):
         params = {
-            'OPERATION-NAME': 'findCompletedItems',
+            'OPERATION-NAME': 'findItemsAdvanced',
             'SERVICE-VERSION': '1.13.0',
             'SECURITY-APPNAME': self.KEY,
             'buyerPostalCode': _zip,
             'RESPONSE-DATA-FORMAT': 'JSON',
             'REST-PAYLOAD': '',
             'paginationInput.pageNumber': '{}'.format(page),
+            # 'sortOrder': 'BestMatch', 
+            'itemFilter(0).name':'bestOfferEnabled',
+            'itemFilter(0).value(0)':'true',
+            # 'itemFilter(0).value(1)':'FixedPrice',
             'keywords': self.MPN
         }
+        # print('http://svcs.ebay.com/services/search/FindingService/v1?' + urllib.parse.urlencode(params).replace('%280%29', '(0)').replace('%281%29', '(1)').replace('%282%29', '(2)'))
         return 'http://svcs.ebay.com/services/search/FindingService/v1?' + urllib.parse.urlencode(params)
 
     def get_total_pages(self, _zip ='01609'):
         api_response = requests.get(self.get_sold_url(_zip))
-        result_dict = api_response.json()['findCompletedItemsResponse'][0]
+        result_dict = api_response.json()['findItemsAdvancedResponse'][0]
         totalPages = int(result_dict['paginationOutput'][0]['totalPages'][0])
         img = result_dict['searchResult'][0]['item'][0]['galleryURL'][0]
         print('MPN:{}, Total pages number:{}, Image-logo:{}'.format(self.MPN, totalPages, img))
@@ -39,7 +45,9 @@ class ebayAPI(object):
 
     def get_first_img(self, _zip ='01609'):
         api_response = requests.get(self.get_sold_url(_zip))
-        result_dict = api_response.json()['findCompletedItemsResponse'][0]
+        result_dict = api_response.json()['findItemsAdvancedResponse'][0]
+        # print(result_dict)
+
         img = result_dict['searchResult'][0]['item'][0]['galleryURL'][0]
         print('MPN:{}, Image-logo:{}'.format(self.MPN, img))
         return img
@@ -54,23 +62,26 @@ class ebayAPI(object):
                 shipping = float(item['shippingInfo'][0]['shippingServiceCost'][0]['__value__'])
             price = float(item['sellingStatus'][0]['currentPrice'][0]['__value__'])
             total += shipping + price
+            # print(price, shipping, item['title'][0], item['sellingStatus'][0])
             n += 1
         return (total,n)
 
     def func_test(self, page, _zip='01609'):
         api_response = requests.get(self.get_sold_url(_zip, page))
 
-        result_dict =api_response.json()['findCompletedItemsResponse'][0]
-
+        result_dict =api_response.json()['findItemsAdvancedResponse'][0]
+        # ['findCompletedItemsResponse'][0]
+        # print(result_dict['searchResult'][0]['item'][0]['sellingStatus'][0]['currentPrice'][0]['__value__'])
         if 'searchResult' in result_dict:
             s,n = self.get_items_sum(result_dict['searchResult'][0]['item'])
+            # print(s,n)
             return s/n
 
     def get_sold_items_info(self):
         pool = Pool(os.cpu_count())
         img = self.get_first_img()
         # size = int(np.rint(total_pages/2))
-        sample = [1,2,3] # list(np.random.randint(low=4, high=total_pages-1, size=size)) + [1,2,3]
+        sample = [1] # list(np.random.randint(low=4, high=total_pages-1, size=size)) + [1,2,3]
         lst = list(filter(None, pool.map(self.func_test, (sample))))
         # print('lst:{} \n lst_count:{} vs size:{} - Thus {} are missing due to network connection and/or scappring issues'.format(lst,len(lst), size, len(lst) - size))
         return {'Img':img,'AvgPrice':np.mean(lst)}
