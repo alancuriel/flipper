@@ -40,5 +40,3 @@ def getbrandmodel(productname):
         brand = soup.find("h2", itemprop="brand").text
 
     return model + " " + brand
-
-getbrandmodel("airpods")
