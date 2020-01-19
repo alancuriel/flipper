@@ -30,25 +30,17 @@
 {% block navbar %}    
       <!-- Fixed navbar -->
       <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="#">Fixed navbar</a>
+        <a class="navbar-brand" href="/">Flipper</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" href="#">Disabled</a>
-            </li>
           </ul>
 
           <form action="/search_test" method="POST" class="form-inline mt-2 mt-md-0">
-          	<input type="checkbox" name="secureSearch">Secure Search</div>
+              <input type="checkbox" class="form-check-input" name="secureSearch">
+              <label class="form-check-label text-light" for="secureSearch">Secure Search  </label>
             <input class="form-control mr-sm-2" type="text" name="query" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit" value="submit">Search</button>
           </form>
@@ -127,7 +119,7 @@
 
 	    <div class="col-lg-2 col-md-3 col-4">
 	    	
-	      <a href="#" class="d-block mb-5 h-200">
+	      <a href={{mercariLinks[i]}} class="d-block mb-5 h-200">
 	      	<div class="container-img">
 	            <img class="img-fluid img-thumbnail" src={{mercariImages[i]}} alt="" style="background-color: #2b2d2f;
     border: 1px solid #2b2d2f; width: 100%;">

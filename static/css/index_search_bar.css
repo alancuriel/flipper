@@ -1527,6 +1527,7 @@ span.flatpickr-weekday {
   padding: 15px;
   position: absolute;
   width: 100%;
+  background: rgba(14.9, 14.5, 16.5, 0.5);
 }
 
 .s002 form {
