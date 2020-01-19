@@ -50,8 +50,9 @@ code {
   padding: 0px;
 }
 
+
 .row {
-  height: 400px;
+  height: 100%;
 }
 
 #product-card {
@@ -59,7 +60,7 @@ code {
 }
 
 .list-group-item {
-  height: 175px;
+  height: 15%;
 }
 
 
