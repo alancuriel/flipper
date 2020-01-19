@@ -1,5 +1,4 @@
-from bs4 import  BeautifulSoup
-import html5lib
+from bs4 import BeautifulSoup
 import  requests as req
 import json
 import  urllib.parse
