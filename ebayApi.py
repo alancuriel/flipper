@@ -5,6 +5,7 @@ import threading
 from multiprocessing import Pool, Manager
 import numpy as np 
 import os
+import math
 
 # KEY = "NSIT22619-c5e7-41ee-9311-cbde5b60ca2"
 # testMPN = "MV7N2AM/A"
@@ -73,7 +74,8 @@ class ebayAPI(object):
         sample = [1,2,3] # list(np.random.randint(low=4, high=total_pages-1, size=size)) + [1,2,3]
         lst = list(filter(None, pool.map(self.func_test, (sample))))
         # print('lst:{} \n lst_count:{} vs size:{} - Thus {} are missing due to network connection and/or scappring issues'.format(lst,len(lst), size, len(lst) - size))
-        return {'Img':img,'AvgPrice':np.mean(lst)}
+        AvgPrice = math.floor(np.mean(lst))
+        return {'Img':img,'AvgPrice':AvgPrice}
 
 
 # def get_sold_items_info(mpn,zip='01609'):

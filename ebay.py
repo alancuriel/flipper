@@ -12,7 +12,15 @@ def getmpn(productname):
     #pass new link into soup
     soup = BeautifulSoup(itempage.text, 'html.parser')
     #return mpn
-    return soup.find("h2", itemprop="mpn").text
+
+    mpn = soup.find("h2", itemprop="mpn")
+
+    if not mpn:
+        mpn = " "
+    else:
+        mpn = soup.find("h2", itemprop="mpn").text
+
+    return mpn
 
 def getbrandmodel(productname):
     #Get Html from URL Search
@@ -29,12 +37,16 @@ def getbrandmodel(productname):
     model = soup.find("h2", itemprop="model")
     brand = soup.find("h2", itemprop="brand")
 
-    if not model:
+    # FIX THIS LOGIC TOOO *************************
+    if not model and not brand:
+        model = " "
+        brand = " "
+    elif model and not brand:
+        brand = " "
+        model = soup.find("h2", itemprop="model").text
+    elif not model and brand:
         model = " "
         brand = soup.find("h2", itemprop="brand").text
-    elif not brand:
-        brand = ""
-        model = soup.find("h2", itemprop="model").text
     else:
         model = soup.find("h2", itemprop="model").text
         brand = soup.find("h2", itemprop="brand").text

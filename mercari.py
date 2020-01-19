@@ -33,5 +33,17 @@ def get_soup(url):
         'user-agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36'
         }
     r = req.get(url,headers = headers)
-    return BeautifulSoup(r.text)
+    # r = req.get("https://www.mercari.com/search/?authenticities=0&facets=2&keyword=Nintendo%20switch&length=30&maxPrice=28000&minPrice=7500",headers = headers)
 
+    return BeautifulSoup(r.text, features="html.parser")
+
+# 283.45323333333346
+# 85.03597000000003
+
+# no secure search
+# nintendo switch
+# 253.14470000000014
+# 75.94341000000004
+
+result = get_items("nintendo switch", 85.03597000000003,283.45323333333346)
+print(result)
