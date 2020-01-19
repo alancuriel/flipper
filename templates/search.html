@@ -63,16 +63,19 @@
 	  <div class="row">
 	  	<div class="col-4" id='product-card'>
 	  		<div class="card-body" border-color="blue" >
-		        <h4 id="section1"><strong>Airpods</strong>
+		        <h4 id="section1"><strong>{{ productName }}</strong>
 		        </h4>
-		        <img src="../static/images/giphy.gif" class="img-fluid" alt="Responsive image">
+		        <img src={{ebayImg}} class="img-fluid" alt="Responsive image">
 		        <div class="row">
 		        	<div class='col'>
 		        		<div class="card-body justify-content-center">
 		        			<h5>Ebay Avg</h5>
-		        		</div>
+		        			<p>{{ebayPrice}}</p
+>		        		</div>
 		        	</div>
-		        	<div class='col'><h5>Mercari Avg</h5></div>
+		        	<div class='col'><h5>Mercari Avg</h5>
+		        		<p>{{ebayPrice}}</p>
+		        	</div>
 		        </div>
 		      </div>
 	    </div>
