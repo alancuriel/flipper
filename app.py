@@ -61,7 +61,7 @@ def search():
 			ebayinfo = ebayAPI(mpn).get_sold_items_info()
 			searches = mongo.db.searches
 			searches.insert({'item': request.form['query'], 'mpn': mpn, 'ebayavg': ebayinfo['AvgPrice'], 'date': datetime.datetime.utcnow()})
-			mercariList = get_items(mpn, math.floor(ebayinfo['AvgPrice']*0.3), ebayinfo['AvgPrice'])
+			mercariList = get_items(request.form['query']+ " " + mpn, math.floor(ebayinfo['AvgPrice']*0.3), ebayinfo['AvgPrice'])
 		else:
 			print(request.form)
 			searches = mongo.db.searches
@@ -74,8 +74,8 @@ def search():
 				mercariList = get_items(newname, math.floor(ebayinfo['AvgPrice']*0.3), ebayinfo['AvgPrice'])
 			else:
 				print("hoi")
-				ebayinfo = {'Img': "", 'AvgPrice': result['ebayavg']}
-				mercariList = get_items(request.form['query'], math.floor(ebayinfo['AvgPrice'] * 0.3), ebayinfo['AvgPrice'])
+				ebayinfo = {'Img': "", 'AvgPrice': math.floor(result['ebayavg'])}
+				mercariList = get_items(request.form['query'], math.floor(ebayinfo['AvgPrice'] * 0.3), math.floor(ebayinfo['AvgPrice']))
 		print(ebayinfo['AvgPrice'])
 		print(math.floor(ebayinfo['AvgPrice'] * 0.3))
 
