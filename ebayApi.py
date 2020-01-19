@@ -131,6 +131,7 @@ class ebayAPI(object):
          
 
 def main():
+
     lol = ebayAPI("MV7N2AM/A")
     print(lol.get_sold_items_info())
 
