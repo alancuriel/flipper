@@ -1,5 +1,5 @@
-# Flipper
-Python web application that finds products to buy from [mercari](mercari.com) and sell on [ebay](ebay.com)
+# Flipper         | WPI Hackathon 2020
+Python web application that finds products to buy from [mercari](https://www.mercari.com) and sell on [ebay](https://www.ebay.com)
 
 # How to run
 To run locally you need to run the command "python app.py" inside the flipper directory. Once the server is running, open in your browser "http://localhost:5000/"
