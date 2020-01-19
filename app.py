@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap
 from flask_pymongo import PyMongo
 from ebay import getmpn, getbrandmodel
-from ebayApi import get_sold_items_info
+from ebayApi import ebayAPI
 import datetime
 
 
@@ -24,12 +24,12 @@ def search():
         #secure search
         if 'secureSearch' in request.form:
             mpn = getmpn(request.form['query'])
-            ebayinfo = get_sold_items_info(mpn)
+            ebayinfo = ebayAPI(mpn).get_sold_items_info()
             searches = mongo.db.searches
             searches.insert({'item': request.form['query'], 'mpn': mpn, 'ebayavg': ebayinfo['AvgPrice'], 'date': datetime.datetime.utcnow()})
         else:
             newname = request.form['query'] + " " + getbrandmodel(request.form['query'])
-            ebayinfo = get_sold_items_info(newname)
+            ebayinfo = ebayAPI(newname).get_sold_items_info()
             searches = mongo.db.searches
             searches.insert({'item': newname, 'mpn': '', 'ebayavg': ebayinfo['AvgPrice'],
                              'date': datetime.datetime.utcnow()})

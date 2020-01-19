@@ -59,7 +59,7 @@ class ebayAPI(object):
             s,n = self.get_items_sum(result_dict['searchResult'][0]['item'])
             return s/n
 
-    def get_sold_items_info_updated(self):
+    def get_sold_items_info(self):
         pool = Pool(os.cpu_count())
         img, total_pages = self.get_total_pages()
         size = int(np.rint(total_pages/2))
@@ -131,8 +131,7 @@ class ebayAPI(object):
          
 
 def main():
-    lol = ebayAPI("MV7N2AM/A")
-    print(lol.get_sold_items_info_updated())
+    print(ebayAPI("MV7N2AM/A").get_sold_items_info_updated())
 
 
 if __name__ == '__main__':
