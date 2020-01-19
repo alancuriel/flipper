@@ -3,10 +3,14 @@
 html {
   position: relative;
   min-height: 100%;
+  overflow: hidden;
+  height: 100%;
 }
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
+  overflow: hidden;
+  height: 100%
 }
 
 .footer {
@@ -26,11 +30,16 @@ body {
 
 body > .container {
   padding: 60px 15px 0;
+  height: 100%;
 }
 
 .footer > .container {
   padding-right: 15px;
   padding-left: 15px;
+}
+
+.container img {
+  max-height: 80%;
 }
 
 code {
@@ -52,7 +61,7 @@ code {
 
 
 .row {
-  height: 100%;
+  height: 80%;
 }
 
 #product-card {

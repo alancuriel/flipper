@@ -49,6 +49,7 @@ def search():
 	mercariImages = []
 	mercariPrices = []
 	mercariDescrip = []
+	mercariLinks = []
 	lenMercari = 0
 
 	if request.method == 'POST':
@@ -77,6 +78,7 @@ def search():
 			mercariImages.append(item['image'])
 			mercariPrices.append(item['offers']["price"])
 			mercariDescrip.append(item["description"])
+			mercariLinks.append("https://mercari.com" + item['offers']['url'])
 		lenMercari = len(mercariNames)
 
 
@@ -87,25 +89,8 @@ def search():
 		ebayImg = ebayinfo['Img']
 		ebayPrice = ebayinfo['AvgPrice']
 
-		return render_template('search.html',productName=productName,ebayImg = ebayImg, ebayPrice=ebayPrice,mercariNames=mercariNames,mercariImages=mercariImages,mercariPrices=mercariPrices,mercariDescrip=mercariDescrip,lenMercari=lenMercari)
+		return render_template('search.html',productName=productName,ebayImg = ebayImg, ebayPrice=ebayPrice,mercariNames=mercariNames,mercariImages=mercariImages,mercariPrices=mercariPrices,mercariDescrip=mercariDescrip,mercariLinks=mercariLinks,lenMercari=lenMercari)
 	return render_template('search.html', lenMercari=0)
-
-    # if request.method == 'POST':
-    #     #secure search
-    #     if 'secureSearch' in request.form:
-    #         mpn = getmpn(request.form['query'])
-    #         ebayinfo = ebayAPI(mpn).get_sold_items_info()
-    #         searches = mongo.db.searches
-    #         searches.insert({'item': request.form['query'], 'mpn': mpn, 'ebayavg': ebayinfo['AvgPrice'], 'date': datetime.datetime.utcnow()})
-    #     else:
-    #         newname = request.form['query'] + " " + getbrandmodel(request.form['query'])
-    #         ebayinfo = ebayAPI(newname).get_sold_items_info()
-    #         searches = mongo.db.searches
-    #         searches.insert({'item': newname, 'mpn': '', 'ebayavg': ebayinfo['AvgPrice'],
-    #                          'date': datetime.datetime.utcnow()})
-    #     print(request.form['query'])
-    #     print(request.form)
-    # return render_template('search.html')
 
 
 if __name__ == '__main__':
