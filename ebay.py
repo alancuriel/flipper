@@ -25,4 +25,20 @@ def getbrandmodel(productname):
     #pass new link into soup
     soup = BeautifulSoup(itempage.text, 'html.parser')
     #return mpn
-    return soup.find("h2", itemprop="model").text + " " + soup.find("h2", itemprop="brand").text
+
+    model = soup.find("h2", itemprop="model")
+    brand = soup.find("h2", itemprop="brand")
+
+    if not model:
+        model = " "
+        brand = soup.find("h2", itemprop="brand").text
+    elif not brand:
+        brand = ""
+        model = soup.find("h2", itemprop="model").text
+    else:
+        model = soup.find("h2", itemprop="model").text
+        brand = soup.find("h2", itemprop="brand").text
+
+    return model + " " + brand
+
+getbrandmodel("airpods")
