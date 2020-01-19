@@ -21,11 +21,13 @@ test = {
 }
 
 
-@app.route('/')
+@app.route('/',methods=['POST', 'GET'])
 def index():
-	online_users = mongo.db.users.find({"online": True})
-	return render_template("index.html",
-						   online_users=online_users)
+	if request.method == 'POST':
+		pass
+	else:
+		online_users = mongo.db.users.find({"online": True})
+		return render_template("index.html", online_users=online_users)
 
 @app.route('/search', methods=['POST', 'GET'])
 def search():
@@ -61,7 +63,7 @@ def search():
 			mercariList = get_items(mpn, math.floor(ebayinfo['AvgPrice']*0.3), ebayinfo['AvgPrice'])
 		else:
 			print(request.form)
-			newname = request.form['query'] + " " + getbrandmodel(request.form['query'])
+			newname = request.form['query'] #+ " " + getbrandmodel(request.form['query'])
 			ebayinfo = ebayAPI(newname).get_sold_items_info()
 			searches = mongo.db.searches
 			searches.insert({'item': newname, 'mpn': '', 'ebayavg': ebayinfo['AvgPrice'],
