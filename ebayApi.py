@@ -71,7 +71,7 @@ class ebayAPI(object):
         pool = Pool(os.cpu_count())
         img = self.get_first_img()
         # size = int(np.rint(total_pages/2))
-        sample = [1,2,3] # list(np.random.randint(low=4, high=total_pages-1, size=size)) + [1,2,3]
+        sample = [1,2,3,4,5] # list(np.random.randint(low=4, high=total_pages-1, size=size)) + [1,2,3]
         lst = list(filter(None, pool.map(self.func_test, (sample))))
         # print('lst:{} \n lst_count:{} vs size:{} - Thus {} are missing due to network connection and/or scappring issues'.format(lst,len(lst), size, len(lst) - size))
         AvgPrice = math.floor(np.mean(lst))

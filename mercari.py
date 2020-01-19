@@ -45,5 +45,5 @@ def get_soup(url):
 # 253.14470000000014
 # 75.94341000000004
 
-result = get_items("nintendo switch", 85.03597000000003,283.45323333333346)
-print(result)
+# result = get_items("nintendo switch", 85.03597000000003,283.45323333333346)
+# print(result)

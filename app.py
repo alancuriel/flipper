@@ -29,7 +29,7 @@ def index():
 		online_users = mongo.db.users.find({"online": True})
 		return render_template("index.html", online_users=online_users)
 
-@app.route('/search', methods=['POST', 'GET'])
+@app.route('/search_test', methods=['POST', 'GET'])
 def search():
 
 	# data structures of information
@@ -91,8 +91,8 @@ def search():
 		ebayImg = ebayinfo['Img']
 		ebayPrice = ebayinfo['AvgPrice']
 
-		return render_template('search.html',productName=productName,ebayImg = ebayImg, ebayPrice=ebayPrice,mercariNames=mercariNames,mercariImages=mercariImages,mercariPrices=mercariPrices,mercariDescrip=mercariDescrip,mercariLinks=mercariLinks,lenMercari=lenMercari)
-	return render_template('search.html', lenMercari=0)
+		return render_template('search_test.html',productName=productName,ebayImg = ebayImg, ebayPrice=ebayPrice,mercariNames=mercariNames,mercariImages=mercariImages,mercariPrices=mercariPrices,mercariDescrip=mercariDescrip,mercariLinks=mercariLinks,lenMercari=lenMercari)
+	return render_template('search_test.html', lenMercari=0)
 
 
 if __name__ == '__main__':

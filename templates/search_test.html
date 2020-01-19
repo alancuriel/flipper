@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+
+
+{% block head %}
+    {{ super() }}
+    <title>{% block title %}{% endblock %} - MyFlask</title>
+
+
+    {%- block metas %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {%- endblock metas %}
+
+	{%- block styles %}
+<!--     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500" rel="stylesheet" />
+ -->	<link href="/static/css/bootstrap.min.css" rel="stylesheet" />
+		 <style type="text/css"> 
+			.maintxt {position: relative;}
+			.maintxt > img, 
+			.overlay-text {position: absolute;}
+
+
+		</style>
+	{%- endblock styles %}
+
+{% endblock %}
+
+
+
+{% block navbar %}    
+      <!-- Fixed navbar -->
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="#">Fixed navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#">Disabled</a>
+            </li>
+          </ul>
+
+          <form action="/search_test" method="POST" class="form-inline mt-2 mt-md-0">
+          	<input type="checkbox" name="secureSearch">Secure Search</div>
+            <input class="form-control mr-sm-2" type="text" name="query" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" value="submit">Search</button>
+          </form>
+        </div>
+      </nav>
+{% endblock %}
+
+<!-- <form action="/search" method="post">
+	Search Items:<br>
+	<input type="text" name="query"><br>
+	<input type="submit" value="Submit">
+</form>
+ -->
+
+
+
+
+
+
+{% block scripts %}
+    {{ super() }}
+	<script src="{{url_for('.static', filename='jquery.slim.min.js')}}"></script>
+	<script src="{{url_for('.static', filename='bootstrap.bundle.min.js')}}"></script>
+
+
+
+{% endblock %}
+
+{% block content %}
+<style>
+
+.container-img {
+  position: relative;
+  width: 100%;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+  background: rgba(14.9, 14.5, 16.5, 0.75);
+}
+
+.container-img:hover .overlay {
+  opacity: 1;
+}
+
+.text {
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+</style>
+
+<div class="container" style="max-width: 100%; overflow-y: scroll; background-color: #26252a;">
+
+  <h1 class="font-weight-light text-center text-lg-center mt-4 mb-0" style="color: #ffffff; text-align: center">Ebay Avarage Price: ${{ebayPrice}}</h1>
+  <hr class="mt-2 mb-5" style="background-color: #bfff00; text-align: center">
+
+  <div class="row text-center text-lg-left">
+
+	{% for i in range(0,lenMercari)%}
+
+	    <div class="col-lg-2 col-md-3 col-4">
+	    	
+	      <a href="#" class="d-block mb-5 h-200">
+	      	<div class="container-img">
+	            <img class="img-fluid img-thumbnail" src={{mercariImages[i]}} alt="" style="background-color: #2b2d2f;
+    border: 1px solid #2b2d2f; width: 100%;">
+
+
+				<div class="overlay">
+			    <div class="text">{{mercariNames[i]}}</div>
+			  </div>
+
+			  </div>
+	            <div class="maintxt" style="text-align:center; background-color: #2b2d2f;">
+	             <span class="overlay-text" style="color:#bfff00;">Price: ${{mercariPrices[i]}}</span>
+	        </div></img>
+
+	          </a>
+	    </div>
+	{%endfor%}
+
+	   
+				</div>
+
+		      </div>
+
+		
+
+{% endblock %}
