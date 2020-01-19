@@ -64,13 +64,18 @@ def search():
 			mercariList = get_items(mpn, math.floor(ebayinfo['AvgPrice']*0.3), ebayinfo['AvgPrice'])
 		else:
 			print(request.form)
-			newname = request.form['query'] #+ " " + getbrandmodel(request.form['query'])
-			ebayinfo = ebayAPI(newname).get_sold_items_info()
 			searches = mongo.db.searches
-			searches.insert({'item': newname, 'mpn': '', 'ebayavg': ebayinfo['AvgPrice'],
+			result = searches.find_one({'item': request.form['query']})
+			if not result:
+				newname = request.form['query'] #+ " " + getbrandmodel(request.form['query'])
+				ebayinfo = ebayAPI(newname).get_sold_items_info()
+				searches.insert({'item': newname, 'mpn': '', 'ebayavg': ebayinfo['AvgPrice'],
 							 'date': datetime.datetime.utcnow()})
-			mercariList = get_items(newname, math.floor(ebayinfo['AvgPrice']*0.3), ebayinfo['AvgPrice'])
-
+				mercariList = get_items(newname, math.floor(ebayinfo['AvgPrice']*0.3), ebayinfo['AvgPrice'])
+			else:
+				print("hoi")
+				ebayinfo = {'Img': "", 'AvgPrice': result['ebayavg']}
+				mercariList = get_items(request.form['query'], math.floor(ebayinfo['AvgPrice'] * 0.3), ebayinfo['AvgPrice'])
 		print(ebayinfo['AvgPrice'])
 		print(math.floor(ebayinfo['AvgPrice'] * 0.3))
 
