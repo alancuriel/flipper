@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap
 from flask_pymongo import PyMongo
-from ebay import getmpn
+from ebay import getmpn, getbrandmodel
 from ebayApi import get_sold_items_info
 from mercari import get_items
 import datetime
@@ -51,9 +51,10 @@ def search():
             searches = mongo.db.searches
             searches.insert({'item': request.form['query'], 'mpn': mpn, 'ebayavg': ebayinfo['AvgPrice'], 'date': datetime.datetime.utcnow()})
         else:
-            ebayinfo = get_sold_items_info(request.form['query'])
+            newname = request.form['query'] + " " + getbrandmodel(request.form['query'])
+            ebayinfo = get_sold_items_info(newname)
             searches = mongo.db.searches
-            searches.insert({'item': request.form['query'], 'mpn': '', 'ebayavg': ebayinfo['AvgPrice'],
+            searches.insert({'item': newname, 'mpn': '', 'ebayavg': ebayinfo['AvgPrice'],
                              'date': datetime.datetime.utcnow()})
 
 		# def get_items(keyword: str ,minPrice: int ,maxPrice: int) -> List[Dict]:
