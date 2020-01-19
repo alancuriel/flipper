@@ -30,13 +30,16 @@
 {% block navbar %}    
       <!-- Fixed navbar -->
       <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="/">Flipper</a>
+        <a class="navbar-brand" href="/" style="font-size: 1.75rem;">Flipper</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav mr-auto">
+           <marquee behavior="scroll" style="color:#ffffff;" direction="left">Current Ebay Average Price for following product is: ${{ebayPrice}}</marquee>
+
           </ul>
+
 
           <form action="/search_test" method="POST" class="form-inline mt-2 mt-md-0">
               <input type="checkbox" class="form-check-input" name="secureSearch">
@@ -108,11 +111,12 @@
 
 </style>
 
-<div class="container" style="max-width: 100%; overflow-y: scroll; background-color: #26252a;">
+<div class="container" style="max-width: 100%; overflow-y: scroll; background-color: #26252a; width: 100%; padding: 0px 15px 0;">
 
-  <h1 class="font-weight-light text-center text-lg-center mt-4 mb-0" style="color: #ffffff; text-align: center">Ebay Avarage Price: ${{ebayPrice}}</h1>
+  <h1 class="font-weight-light text-center text-lg-center mt-4 mb-0" style="color: #ffffff; text-align: center">Mercari Product Prices</h1>
   <hr class="mt-2 mb-5" style="background-color: #bfff00; text-align: center">
-
+<!--   <h1 class="font-weight-light text-center text-lg-center mt-4 mb-0" style="color: #ffffff; text-align: center">Mercari Product Prices:</h1>
+ -->
   <div class="row text-center text-lg-left">
 
 	{% for i in range(0,lenMercari)%}
