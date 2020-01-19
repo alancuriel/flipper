@@ -1,2 +1,10 @@
-# flipper
-App that calculates profits from online markets to buy and sell.
+# Flipper
+Python web application that finds products to buy from [mercari](mercari.com) and sell on [ebay](ebay.com)
+
+---
+## Libraries Used
+- Flask
+- beautifulsoup
+- numpy
+- urlib
+
