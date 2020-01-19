@@ -34,9 +34,15 @@ class ebayAPI(object):
         result_dict = api_response.json()['findCompletedItemsResponse'][0]
         totalPages = int(result_dict['paginationOutput'][0]['totalPages'][0])
         img = result_dict['searchResult'][0]['item'][0]['galleryURL'][0]
-
         print('MPN:{}, Total pages number:{}, Image-logo:{}'.format(self.MPN, totalPages, img))
         return img, totalPages
+
+    def get_first_img(self, _zip ='01609'):
+        api_response = requests.get(self.get_sold_url(_zip))
+        result_dict = api_response.json()['findCompletedItemsResponse'][0]
+        img = result_dict['searchResult'][0]['item'][0]['galleryURL'][0]
+        print('MPN:{}, Image-logo:{}'.format(self.MPN, img))
+        return img
 
 
     def get_items_sum(self,items):
@@ -53,19 +59,20 @@ class ebayAPI(object):
 
     def func_test(self, page, _zip='01609'):
         api_response = requests.get(self.get_sold_url(_zip, page))
+
         result_dict =api_response.json()['findCompletedItemsResponse'][0]
-        
+
         if 'searchResult' in result_dict:
             s,n = self.get_items_sum(result_dict['searchResult'][0]['item'])
             return s/n
 
     def get_sold_items_info(self):
         pool = Pool(os.cpu_count())
-        img, total_pages = self.get_total_pages()
-        size = int(np.rint(total_pages/2))
-        sample = list(np.random.randint(low=4, high=total_pages-1, size=size)) + [1,2,3]
+        img = self.get_first_img()
+        # size = int(np.rint(total_pages/2))
+        sample = [1,2,3] # list(np.random.randint(low=4, high=total_pages-1, size=size)) + [1,2,3]
         lst = list(filter(None, pool.map(self.func_test, (sample))))
-        print('lst:{} \n lst_count:{} vs size:{} - Thus {} are missing due to network connection and/or scappring issues'.format(lst,len(lst), size, len(lst) - size))
+        # print('lst:{} \n lst_count:{} vs size:{} - Thus {} are missing due to network connection and/or scappring issues'.format(lst,len(lst), size, len(lst) - size))
         return {'Img':img,'AvgPrice':np.mean(lst)}
 
 
