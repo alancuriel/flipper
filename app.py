@@ -21,6 +21,7 @@ def index():
 @app.route('/search', methods=['POST', 'GET'])
 def search():
     if request.method == 'POST':
+        #secure search
         if 'secureSearch' in request.form:
             mpn = getmpn(request.form['query'])
             ebayinfo = get_sold_items_info(mpn)
