@@ -14,7 +14,7 @@ import os
 class ebayAPI(object):
     def __init__(self, MPN):
         self.MPN = MPN
-        self.KEY = "NSIT22619-c5e7-41ee-9311-cbde5b60ca2"
+        self.KEY = "UnfazedL-0d37-44f2-ac5e-83646964e7d9"
 
     def get_sold_url(self, _zip, page=1):
         params = {
@@ -59,7 +59,7 @@ class ebayAPI(object):
             s,n = self.get_items_sum(result_dict['searchResult'][0]['item'])
             return s/n
 
-    def get_sold_items_info_updated(self):
+    def get_sold_items_info(self):
         pool = Pool(os.cpu_count())
         img, total_pages = self.get_total_pages()
         size = int(np.rint(total_pages/2))
@@ -132,7 +132,7 @@ class ebayAPI(object):
 
 def main():
     lol = ebayAPI("MV7N2AM/A")
-    print(lol.get_sold_items_info_updated())
+    print(lol.get_sold_items_info())
 
 
 if __name__ == '__main__':
